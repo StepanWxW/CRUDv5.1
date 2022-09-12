@@ -9,19 +9,20 @@ import lombok.ToString;
 import java.util.List;
 
 @Entity
+@Table (name = "user", schema = "crudfive",catalog = "postgres")
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 public class User {
-    @Column
+    @Column (name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    @Column
+    @Column (name= "name")
     private String name;
-    @Column
-    @OneToMany
+    @Column (name = "event")
+    @OneToMany (mappedBy = "user")
     private List<Event> eventList;
 
 }

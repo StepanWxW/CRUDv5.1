@@ -18,16 +18,18 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    @Column
+    @Enumerated(EnumType.STRING)
     private Status status;
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp create;
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp update;
-    @Column
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    @Column
+    @JoinColumn (name = "file_id", referencedColumnName = "id")
     @OneToOne
     File file;
 }

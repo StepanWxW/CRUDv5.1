@@ -17,5 +17,7 @@ public class File {
     @Id
     private Long id;
     @Column
-    String name;
+    private String name;
+    @OneToOne (mappedBy = "file")
+    private Event event;
 }
