@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import java.sql.Timestamp;
 @Entity
+@Table(name = "event")
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -20,10 +21,10 @@ public class Event {
     private Long id;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @Column
+    @Column (name = "createtime")
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp create;
-    @Column
+    @Column (name = "updatetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp update;
     @ManyToOne
