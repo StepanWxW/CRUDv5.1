@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "file")
+@Table(name = "file", schema = "crudfive",catalog = "postgres")
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -20,5 +21,6 @@ public class File {
     @Column
     private String name;
     @OneToOne (mappedBy = "file")
+    @JsonManagedReference
     private Event event;
 }

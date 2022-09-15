@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,8 +22,9 @@ public class User {
     private Long id;
     @Column (name= "name")
     private String name;
-    @Column (name = "event")
+    @Column (name = "event_id")
     @OneToMany (mappedBy = "user")
+    @JsonManagedReference
     private List<Event> eventList;
 
 }

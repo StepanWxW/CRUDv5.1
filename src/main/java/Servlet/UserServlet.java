@@ -1,6 +1,8 @@
 package Servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import controller.UserController;
+import dto.UserDTO;
 import model.User;
 import repository.implementation.UserRepositoryImpl;
 
@@ -14,6 +16,7 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/user/*")
 public class UserServlet extends HttpServlet {
+    private final UserController userController = new UserController();
     UserRepositoryImpl userRepository = new UserRepositoryImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,9 +27,10 @@ public class UserServlet extends HttpServlet {
         Long userId = Long.parseLong(param1);
 
         req.setCharacterEncoding("UTF-8");
-
-        User user = userRepository.getById(userId);
-        String jsonUser = new ObjectMapper().writeValueAsString(user);
+//        User user = userRepository.getById(userId);
+//        String jsonUser = new ObjectMapper().writeValueAsString(user);
+        UserDTO userDto = userController.getByIdToDto(userId);
+        String jsonUser = new ObjectMapper().writeValueAsString(userDto);
 
         resp.setContentType("application/json; charset=UTF-8");
         resp.setStatus(200);

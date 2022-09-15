@@ -5,7 +5,7 @@
          version="4.0">
     <servlet>
         <servlet-name>Main</servlet-name>
-        <servlet-class>Servlet.MainServlet</servlet-class>
+        <servlet-class>Servlet.UserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
