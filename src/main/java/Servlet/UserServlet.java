@@ -1,10 +1,9 @@
 package Servlet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.UserController;
 import dto.UserDTO;
-import model.User;
-import repository.implementation.UserRepositoryImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +16,7 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/user/*")
 public class UserServlet extends HttpServlet {
     private final UserController userController = new UserController();
-    UserRepositoryImpl userRepository = new UserRepositoryImpl();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
@@ -27,14 +26,13 @@ public class UserServlet extends HttpServlet {
         Long userId = Long.parseLong(param1);
 
         req.setCharacterEncoding("UTF-8");
-//        User user = userRepository.getById(userId);
-//        String jsonUser = new ObjectMapper().writeValueAsString(user);
+
         UserDTO userDto = userController.getByIdToDto(userId);
-        String jsonUser = new ObjectMapper().writeValueAsString(userDto);
+        String gsonString = gson.toJson(userDto);
 
         resp.setContentType("application/json; charset=UTF-8");
         resp.setStatus(200);
         PrintWriter out = resp.getWriter();
-        out.write(jsonUser);
+        out.write(gsonString);
     }
 }

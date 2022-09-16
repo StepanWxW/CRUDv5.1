@@ -1,19 +1,11 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.sql.Timestamp;
 @Entity
 @Table(name = "event", schema = "crudfive",catalog = "postgres")
-@Getter
-@Setter
 @EqualsAndHashCode
 
 public class Event {
@@ -25,20 +17,64 @@ public class Event {
     private Status status;
     @Column (name = "createtime")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "E, dd MMM yyyy HH:mm:ss z")
     private Timestamp create;
     @Column (name = "updatetime")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "E, dd MMM yyyy HH:mm:ss z")
     private Timestamp update;
     @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonBackReference
     private User user;
     @JoinColumn (name = "file_id", referencedColumnName = "id")
     @OneToOne
-    @JsonBackReference
     File file;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Timestamp getCreate() {
+        return create;
+    }
+
+    public void setCreate(Timestamp create) {
+        this.create = create;
+    }
+
+    public Timestamp getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Timestamp update) {
+        this.update = update;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 
     @Override
     public String toString() {

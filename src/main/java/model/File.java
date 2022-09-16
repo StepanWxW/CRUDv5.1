@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +12,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
+
 public class File {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,5 @@ public class File {
     @Column
     private String name;
     @OneToOne (mappedBy = "file")
-    @JsonManagedReference
     private Event event;
 }

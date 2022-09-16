@@ -3,17 +3,14 @@ package dto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import model.File;
 import model.Status;
-import model.User;
 
 import java.sql.Timestamp;
 
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 public class EventDTO {
     private Long id;
     private Status status;
@@ -21,4 +18,18 @@ public class EventDTO {
     private Timestamp update;
     private UserDTO userDTO;
     File file;
+
+    public EventDTO() {
+    }
+
+    public EventDTO(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "EventDTO{" +
+                "id=" + id +
+                '}';
+    }
 }
