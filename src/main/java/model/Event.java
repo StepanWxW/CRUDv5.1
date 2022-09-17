@@ -28,6 +28,14 @@ public class Event {
     @OneToOne
     File file;
 
+    public Event(Long id) {
+        this.id = id;
+    }
+
+    public Event() {
+
+    }
+
     public Long getId() {
         return id;
     }

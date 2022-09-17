@@ -10,15 +10,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 @WebServlet(urlPatterns = "/user/*")
 public class UserServlet extends HttpServlet {
     private final UserController userController = new UserController();
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
         String[] parts = pathInfo.split("/");
         String param1 = parts[1];
@@ -35,4 +37,53 @@ public class UserServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.write(gsonString);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        StringBuffer jb = new StringBuffer();
+        String line;
+        BufferedReader reader = req.getReader();
+        while ((line = reader.readLine()) != null) {
+            jb.append(line);
+        }
+        UserDTO userDTO = gson.fromJson(String.valueOf(jb), UserDTO.class);
+        userController.createUserFromUserDTO(userDTO);
+        resp.setStatus(200);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String pathInfo = req.getPathInfo();
+        String[] parts = pathInfo.split("/");
+        String param1 = parts[1];
+
+        Long userId = Long.parseLong(param1);
+
+        req.setCharacterEncoding("UTF-8");
+
+        userController.deleteUserFromId(userId);
+        resp.setStatus(200);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        String[] parts = pathInfo.split("/");
+        String param1 = parts[1];
+
+        Long userId = Long.parseLong(param1);
+
+        StringBuffer jb = new StringBuffer();
+        String line;
+        req.setCharacterEncoding("UTF-8");
+        BufferedReader reader = req.getReader();
+        while ((line = reader.readLine()) != null) {
+            jb.append(line);
+        }
+        UserDTO userDTO = gson.fromJson(String.valueOf(jb), UserDTO.class);
+        userDTO.setId(userId);
+        userController.updateUserFromUserDTO(userDTO);
+        resp.setStatus(200);
+    }
+    
 }

@@ -36,6 +36,14 @@ public class UserDTO {
         this.eventDTOList = eventDTOList;
     }
 
+    public UserDTO(String name) {
+        this.name = name;
+    }
+
+    public UserDTO(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
