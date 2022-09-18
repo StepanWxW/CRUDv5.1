@@ -36,4 +36,13 @@ public class UserMapper {
         user.setEventList(eventList);
         return user;
     }
+    public List<UserDTO> allUserDTOFromAllUser(List<User> userList) {
+        List<UserDTO> userDTOList = new ArrayList<>();
+        if (userList != null) {
+            for (User user : userList) {
+                userDTOList.add(userDTOFromUser(user));
+            }
+        }
+        return userDTOList;
+    }
 }

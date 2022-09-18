@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/user/*")
 public class UserServlet extends HttpServlet {
@@ -23,19 +24,28 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
         String[] parts = pathInfo.split("/");
-        String param1 = parts[1];
+        if (parts.length == 0) {
+            List<UserDTO> userDTOList = userController.getAllToDTO();
+            String gsonStringList = gson.toJson(userDTOList);
+            resp.setContentType("application/json; charset=UTF-8");
+            resp.setStatus(200);
+            PrintWriter out = resp.getWriter();
+            out.write(gsonStringList);
+        } else {
+            String param1 = parts[1];
 
-        Long userId = Long.parseLong(param1);
+            Long userId = Long.parseLong(param1);
 
-        req.setCharacterEncoding("UTF-8");
+            req.setCharacterEncoding("UTF-8");
 
-        UserDTO userDto = userController.getByIdToDto(userId);
-        String gsonString = gson.toJson(userDto);
+            UserDTO userDto = userController.getByIdToDto(userId);
+            String gsonString = gson.toJson(userDto);
 
-        resp.setContentType("application/json; charset=UTF-8");
-        resp.setStatus(200);
-        PrintWriter out = resp.getWriter();
-        out.write(gsonString);
+            resp.setContentType("application/json; charset=UTF-8");
+            resp.setStatus(200);
+            PrintWriter out = resp.getWriter();
+            out.write(gsonString);
+        }
     }
 
     @Override

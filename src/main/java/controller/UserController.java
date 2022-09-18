@@ -5,6 +5,8 @@ import model.User;
 import mapper.UserMapper;
 import repository.implementation.UserRepositoryImpl;
 
+import java.util.List;
+
 public class UserController {
     private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
     private final UserMapper userMapper = new UserMapper();
@@ -20,5 +22,9 @@ public class UserController {
 
     public User updateUserFromUserDTO(UserDTO userDTO) {
         return userRepository.update(userMapper.userFromUserDTO(userDTO));
+    }
+
+    public List<UserDTO> getAllToDTO() {
+        return userMapper.allUserDTOFromAllUser(userRepository.getAll());
     }
 }
