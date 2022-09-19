@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/user/*")
 public class UserServlet extends HttpServlet {
     private final UserController userController = new UserController();
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();

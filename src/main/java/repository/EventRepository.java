@@ -1,4 +1,6 @@
 package repository;
 
-public interface EventRepository extends GenericRepository{
+import model.Event;
+
+public interface EventRepository extends GenericRepository <Event, Long> {
 }
