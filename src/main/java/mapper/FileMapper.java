@@ -18,4 +18,20 @@ public class FileMapper {
         file.setEvent(fileDTO.getEvent());
         return file;
     }
+    public FileDTO fileDTOFromFile (File file) {
+        FileDTO fileDTO = new FileDTO();
+        fileDTO.setId(file.getId());
+        fileDTO.setName(file.getName());
+        fileDTO.setEvent(file.getEvent());
+        return fileDTO;
+    }
+    public List<FileDTO> allFileDTOFromAllFile(List<File> fileList) {
+        List<FileDTO> fileDTOList = new ArrayList<>();
+        if (fileList != null) {
+            for (File file : fileList) {
+                fileDTOList.add(fileDTOFromFile(file));
+            }
+        }
+        return fileDTOList;
+    }
 }

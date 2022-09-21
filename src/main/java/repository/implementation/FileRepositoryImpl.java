@@ -1,5 +1,7 @@
 package repository.implementation;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import model.File;
 import org.hibernate.Session;
 import repository.FileRepository;
@@ -20,12 +22,22 @@ public class FileRepositoryImpl implements FileRepository {
 
     @Override
     public List<File> getAll() {
-        return null;
+        List<File> filesList;
+        Session session = sessionUtil.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<File> cq = cb.createQuery(File.class);
+        cq.from(File.class);
+        filesList = session.createQuery(cq).getResultList();
+        session.close();
+        return filesList;
     }
 
     @Override
     public File getById(Long id) {
-        return null;
+        Session session = sessionUtil.openSession();
+        File file = session.get(File.class, id);
+        session.close();
+        return file;
     }
 
     @Override
