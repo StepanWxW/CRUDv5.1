@@ -16,11 +16,13 @@ public class UserMapper {
         userDTO.setName(user.getName());
         List<EventDTO> eventDTOList = new ArrayList<>();
         List<Event> eventList = user.getEventList();
-        for (Event event : eventList) {
-            eventDTOList.add(new EventDTO(event.getId()));
+        if (eventList != null) {
+            for (Event event : eventList) {
+                eventDTOList.add(new EventDTO(event.getId()));
+            }
         }
-        userDTO.setEventDTOList(eventDTOList);
        return userDTO;
+
     }
     public User userFromUserDTO (UserDTO userDTO) {
         User user = new User();

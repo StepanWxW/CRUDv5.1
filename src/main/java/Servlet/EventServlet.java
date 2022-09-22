@@ -2,9 +2,12 @@ package Servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import controller.UserControllerImpl;
-import dto.UserDTO;
+import controller.EventControllerImpl;
+import dto.EventDTO;
 
+
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,17 +17,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/user/*")
-public class UserServlet extends HttpServlet {
-    private final UserControllerImpl userController = new UserControllerImpl();
+
+@WebServlet(urlPatterns = "/event/*")
+public class EventServlet extends HttpServlet {
+    private final EventControllerImpl eventController = new EventControllerImpl();
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         String[] parts = pathInfo.split("/");
         if (parts.length == 0) {
-            List<UserDTO> userDTOList = userController.getAllToDTO();
-            String gsonStringList = gson.toJson(userDTOList);
+            List<EventDTO> eventDTOList = eventController.getAllToDTO();
+            String gsonStringList = gson.toJson(eventDTOList);
             resp.setContentType("application/json; charset=UTF-8");
             resp.setStatus(200);
             PrintWriter out = resp.getWriter();
@@ -32,12 +37,12 @@ public class UserServlet extends HttpServlet {
         } else {
             String param1 = parts[1];
 
-            Long userId = Long.parseLong(param1);
+            Long eventId = Long.parseLong(param1);
 
             req.setCharacterEncoding("UTF-8");
 
-            UserDTO userDto = userController.getByIdToDTO(userId);
-            String gsonString = gson.toJson(userDto);
+            EventDTO eventDTO = eventController.getByIdToDTO(eventId);
+            String gsonString = gson.toJson(eventDTO);
 
             resp.setContentType("application/json; charset=UTF-8");
             resp.setStatus(200);
@@ -47,34 +52,34 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StringBuffer jb = new StringBuffer();
         String line;
         BufferedReader reader = req.getReader();
         while ((line = reader.readLine()) != null) {
             jb.append(line);
         }
-        UserDTO userDTO = gson.fromJson(String.valueOf(jb), UserDTO.class);
-        userController.createFromDTO(userDTO);
+        EventDTO eventDTO = gson.fromJson(String.valueOf(jb), EventDTO.class);
+        eventController.createFromDTO(eventDTO);
         resp.setStatus(200);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         String[] parts = pathInfo.split("/");
         String param1 = parts[1];
 
-        Long userId = Long.parseLong(param1);
+        Long eventId = Long.parseLong(param1);
 
         req.setCharacterEncoding("UTF-8");
 
-        userController.deleteFromId(userId);
+        eventController.deleteFromId(eventId);
         resp.setStatus(200);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         String[] parts = pathInfo.split("/");
         String param1 = parts[1];
@@ -88,10 +93,9 @@ public class UserServlet extends HttpServlet {
         while ((line = reader.readLine()) != null) {
             jb.append(line);
         }
-        UserDTO userDTO = gson.fromJson(String.valueOf(jb), UserDTO.class);
-        userDTO.setId(userId);
-        userController.updateFromDTO(userDTO);
+        EventDTO eventDTO = gson.fromJson(String.valueOf(jb), EventDTO.class);
+        eventDTO.setId(userId);
+        eventController.updateFromDTO(eventDTO);
         resp.setStatus(200);
     }
-    
 }

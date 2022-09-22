@@ -19,4 +19,12 @@
         <servlet-name>file</servlet-name>
         <url-pattern>/file</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>event</servlet-name>
+        <servlet-class>Servlet.EventServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>event</servlet-name>
+        <url-pattern>/event</url-pattern>
+    </servlet-mapping>
 </web-app>

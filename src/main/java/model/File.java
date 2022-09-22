@@ -22,4 +22,11 @@ public class File {
     private String name;
     @OneToOne (mappedBy = "file")
     private Event event;
+
+    public File() {
+    }
+
+    public File(Long id) {
+        this.id = id;
+    }
 }

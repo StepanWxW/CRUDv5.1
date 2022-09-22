@@ -17,7 +17,7 @@ public class EventDTO {
     private Timestamp create;
     private Timestamp update;
     private UserDTO userDTO;
-    File file;
+    private FileDTO fileDTO;
 
     public EventDTO() {
     }
@@ -30,6 +30,11 @@ public class EventDTO {
     public String toString() {
         return "EventDTO{" +
                 "id=" + id +
+                ", status=" + status +
+                ", create=" + create +
+                ", update=" + update +
+                ", userDTO=" + userDTO +
+                ", fileDTO=" + fileDTO +
                 '}';
     }
 }

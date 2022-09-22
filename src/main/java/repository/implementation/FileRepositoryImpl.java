@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import model.File;
@@ -42,11 +43,23 @@ public class FileRepositoryImpl implements FileRepository {
 
     @Override
     public File update(File file) {
-        return null;
+        try(Session session = sessionUtil.openTransactionSession()) {
+            session.saveOrUpdate(file);
+            session.getTransaction().commit();
+        } catch (EntityNotFoundException e) {
+            System.out.println("File whit id: " + file.getId() + " is missing.");
+        }
+        return file;
     }
 
     @Override
     public void remove(Long id) {
-
+        try(Session session = sessionUtil.openTransactionSession()) {
+            File file = session.load(File.class, id);
+            session.delete(file);
+            session.getTransaction().commit();
+        } catch (EntityNotFoundException e) {
+            System.out.println("File whit id: " + id + " is missing.");
+        }
     }
 }

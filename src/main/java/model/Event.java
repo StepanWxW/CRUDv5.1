@@ -2,9 +2,13 @@ package model;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 @Entity
+@Setter
+@Getter
 @Table(name = "event", schema = "crudfive",catalog = "postgres")
 @EqualsAndHashCode
 
@@ -34,54 +38,6 @@ public class Event {
 
     public Event() {
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Timestamp getCreate() {
-        return create;
-    }
-
-    public void setCreate(Timestamp create) {
-        this.create = create;
-    }
-
-    public Timestamp getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(Timestamp update) {
-        this.update = update;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     @Override

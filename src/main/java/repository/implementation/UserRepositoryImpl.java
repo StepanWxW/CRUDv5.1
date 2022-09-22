@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
             session.saveOrUpdate(user);
             session.getTransaction().commit();
         } catch (EntityNotFoundException e) {
-            System.out.println("Region whit id: " + user.getId() + " is missing.");
+            System.out.println("User whit id: " + user.getId() + " is missing.");
         }
         return user;
     }
@@ -59,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
             session.delete(user);
             session.getTransaction().commit();
         } catch (EntityNotFoundException e) {
-            System.out.println("Region whit id: " + id + " is missing.");
+            System.out.println("User whit id: " + id + " is missing.");
         }
     }
 }
