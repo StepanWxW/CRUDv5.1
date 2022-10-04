@@ -1,1 +1,0 @@
-web: java -war target/CRUDv5.1-1.0-SNAPSHOT.war
